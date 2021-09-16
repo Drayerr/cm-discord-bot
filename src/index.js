@@ -6,7 +6,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 
 const prefix = '$'
 
-client.on("message", function(message) {
+client.on("message", function (message) {
   //verifica se quem escreveu não é um bot
   if (message.author.bot) return
   //verificando se começa com o prefixo
@@ -22,6 +22,20 @@ client.on("message", function(message) {
   if (command === "ping") {
     message.reply(`Pong! ${args}`)
   }
+
+  if (command === "banana") {
+    message.reply('Dale pro pai una bananita yumi yumi.')
+  }
 })
+
+client.once('ready', () => {
+  console.log('Ready!');
+});
+client.once('reconnecting', () => {
+  console.log('Reconnecting!');
+});
+client.once('disconnect', () => {
+  console.log('Disconnect!');
+});
 
 client.login(token)
