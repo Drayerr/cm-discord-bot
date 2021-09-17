@@ -1,6 +1,7 @@
 const banana = require("../commands/banana")
 const ping = require("../commands/ping")
-const play = require("../commands/play")
+// const play = require("../commands/play")
+const onCallMembers = require("../commands/onCallMembers")
 
 const prefix = '$'
 
@@ -25,7 +26,11 @@ module.exports = function (message) {
     banana(message)
   }
 
-  if (command === "play") {
-    play(message, args)
+  // if (command === "play") {
+  //   play(message, args)
+  // }
+
+  if (command === "oncall") {
+    onCallMembers(message)
   }
 }

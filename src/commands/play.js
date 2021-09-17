@@ -3,27 +3,25 @@ const { joinVoiceChannel } = require('@discordjs/voice')
 
 const queue = new Map()
 
-module.exports = async function play(messageCreate, args) {
-
-	
+module.exports = async function play(message, args) {
 
 	try {
-		const serverQueue = queue.get(messageCreate.guild.id)
-		const voiceChannel = messageCreate.member.voice.channel
+		const serverQueue = queue.get(message.guild.id)
+		const voiceChannel = message.member.voice.channel
 
 		console.log('args', args);
 
 		if (!args || args.length < 1) {
-			return messageCreate.reply('Coloca um link aí Cabrón')
+			return message.reply('Coloca um link aí Cabrón')
 		}
 
 		if (!voiceChannel) {
-			return messageCreate.reply('Entra na call corno')
+			return message.reply('Entra na call corno')
 		}
 
 		console.log('tem voice channel')
 
-		const permissions = voiceChannel.permissionsFor(messageCreate.client.user)
+		const permissions = voiceChannel.permissionsFor(message.client.user)
 
 		console.log(permissions, permissions.has("CONNECT"), permissions.has("SPEAK"))
 
@@ -31,7 +29,7 @@ module.exports = async function play(messageCreate, args) {
 
 			console.log('não tem permissão')
 
-			return messageCreate.channel.send(
+			return message.channel.send(
 				"Me deixa hablar no canal please!"
 			)
 		}
@@ -45,7 +43,7 @@ module.exports = async function play(messageCreate, args) {
 		if (!serverQueue) {
 			// Creating the contract for our queue
 			const queueContract = {
-				textChannel: messageCreate.channel,
+				textChannel: message.channel,
 				voiceChannel: voiceChannel,
 				connection: null,
 				songs: [],
@@ -53,32 +51,32 @@ module.exports = async function play(messageCreate, args) {
 				playing: true,
 			}
 
-			queue.set(messageCreate.guild.id, queueContract)
+			queue.set(message.guild.id, queueContract)
 			// Pushing the song to our songs array
 			queueContract.songs.push(song)
 
 			//Try to join the voiceChat and save our connection into our object.
 			try {
 				var connection = await joinVoiceChannel({
-					channelId: messageCreate.member.voice.channel.id,
-					guildId: messageCreate.guild.id,
-					adapterCreator: messageCreate.guild.voiceAdapterCreator
+					channelId: message.member.voice.channel.id,
+					guildId: message.guild.id,
+					adapterCreator: message.guild.voiceAdapterCreator
 				})
 				queueContract.connection = connection
 				// Calling the play function to start a song
-				playSong(messageCreate.guild, queueContract.songs[0])
+				playSong(message.guild, queueContract.songs[0])
 				// Setting the queue using our contract
 			} catch (err) {
 				console.log(err);
 				// Delete the queue if the bot cant join chat
-				queue.delete(messageCreate.guild.id)
-				return messageCreate.channel.send(err)
+				queue.delete(message.guild.id)
+				return message.channel.send(err)
 			}
 
 			
 		} else {
 			serverQueue.songs.push(song)
-			return messageCreate.channel.send(`${song.title} vou tocar essa bagaça!`)
+			return message.channel.send(`${song.title} vou tocar essa bagaça!`)
 		}
 
 		function playSong(guild, song) {
@@ -108,7 +106,7 @@ module.exports = async function play(messageCreate, args) {
 		}
 
 
-		messageCreate.reply(`${voiceChannel}`)
+		message.reply(`${voiceChannel}`)
 
 	} catch (err) {
 		console.log('err', err)

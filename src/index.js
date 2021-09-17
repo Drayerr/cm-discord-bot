@@ -19,3 +19,5 @@ client.once('disconnect', () => {
 });
 
 client.login(token)
+
+module.exports = client
