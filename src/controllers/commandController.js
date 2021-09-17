@@ -8,6 +8,7 @@ const summon = require("../commands/summon")
 const prefix = '$'
 
 module.exports = function (message) {
+  console.log('recebeu a msg');
   //verifica se quem escreveu não é um bot
   if (message.author.bot) return
   //verificando se começa com o prefixo

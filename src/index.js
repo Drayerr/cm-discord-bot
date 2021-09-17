@@ -4,20 +4,25 @@ const GetCommand = require('./controllers/commandController')
 
 const token = process.env.BOT_TOKEN
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] })
+try {
+  const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] })
 
-client.on("messageCreate", GetCommand)
+  client.on("message", GetCommand)
 
-client.once('ready', () => {
-  console.log('Ready!');
-});
-client.once('reconnecting', () => {
-  console.log('Reconnecting!');
-});
-client.once('disconnect', () => {
-  console.log('Disconnect!');
-});
+  client.once('ready', () => {
+    console.log('Ready!');
+  });
+  client.once('reconnecting', () => {
+    console.log('Reconnecting!');
+  });
+  client.once('disconnect', () => {
+    console.log('Disconnect!');
+  });
+  
+  client.login(token)
+  
+  module.exports = client
 
-client.login(token)
-
-module.exports = client
+} catch(err) {
+  console.log(err);
+}
