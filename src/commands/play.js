@@ -3,6 +3,9 @@ const ytdl = require("ytdl-core");
 const prefix = '$'
 
 module.exports = function play(message) {
+
+	const queue = new Map()
+
 	if (message.author.bot) return;
 	if (!message.content.startsWith(prefix)) return;
 
