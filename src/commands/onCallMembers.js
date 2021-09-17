@@ -5,5 +5,7 @@ module.exports = function onCallMembers(message) {
 
   const usernames = Array.from(usernamesMap)
 
-  message.reply(`Data: ${usernames}`)
+  const st = [...usernames].join(',\n- ')
+
+  message.reply(`Otakus fedidos na call: \n- ${st}`)
 }
