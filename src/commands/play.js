@@ -3,12 +3,14 @@ const ytdl = require("ytdl-core");
 const prefix = '$'
 
 module.exports = function play(message) {
-
+	
 	const queue = new Map()
 
+	// Verify prefix, and if author is another bot
 	if (message.author.bot) return;
 	if (!message.content.startsWith(prefix)) return;
 
+	// Add msg with command to queue of server
 	const serverQueue = queue.get(message.guild.id);
 
 	if (message.content.startsWith(`${prefix}play`)) {
@@ -28,6 +30,8 @@ module.exports = function play(message) {
 		const args = message.content.split(" ");
 
 		const voiceChannel = message.member.voice.channel;
+
+		// Verify channel of caller and if bot have permitions
 		if (!voiceChannel)
 			return message.channel.send(
 				"You need to be in a voice channel to play music!"
@@ -39,6 +43,7 @@ module.exports = function play(message) {
 			);
 		}
 
+		// Getting information of song from youtube link
 		const songInfo = await ytdl.getInfo(args[1]);
 		const song = {
 			title: songInfo.videoDetails.title,
@@ -51,14 +56,17 @@ module.exports = function play(message) {
 				voiceChannel: voiceChannel,
 				connection: null,
 				songs: [],
-				volume: 5,
+				volume: 3,
 				playing: true
 			};
 
+			// Add Guild ID and queueContruct to queue map
 			queue.set(message.guild.id, queueContruct);
 
+			// Add song at songs array of queue
 			queueContruct.songs.push(song);
 
+			// Joining voice channel
 			try {
 				var connection = await voiceChannel.join();
 				queueContruct.connection = connection;

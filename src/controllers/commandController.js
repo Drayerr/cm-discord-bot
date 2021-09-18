@@ -4,6 +4,9 @@ const onCallMembers = require("../commands/onCallMembers")
 const meia7 = require('../commands/meia7')
 const play = require("../commands/play")
 const summon = require("../commands/summon")
+const chablau = require("../commands/chablau")
+const demonarch = require("../commands/demonarch")
+const drayerr = require("../commands/drayerr")
 
 const prefix = '$'
 
@@ -24,24 +27,28 @@ module.exports = function (message) {
   if (command === "ping") {
     ping(message, args)
   }
-
   if (command === "banana") {
     banana(message)
   }
-
   if (command === "play") {
     play(message, args)
   }
-
   if (command === "oncall") {
     onCallMembers(message)
   }
-
   if (command === "2345meia78") {
     meia7(message)
   }
-
   if (command === "summon") {
     summon(message)
+  }
+  if (command === "chablau") {
+    chablau(message)
+  }
+  if (command === "demonarch") {
+    demonarch(message)
+  }
+  if (command === "drayerr") {
+    drayerr(message)
   }
 }
