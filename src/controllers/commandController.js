@@ -7,6 +7,7 @@ const summon = require("../commands/summon")
 const chablau = require("../commands/chablau")
 const demonarch = require("../commands/demonarch")
 const drayerr = require("../commands/drayerr")
+const leave = require("../commands/leave")
 
 const prefix = '$'
 
@@ -50,5 +51,8 @@ module.exports = function (message) {
   }
   if (command === "drayerr") {
     drayerr(message)
+  }
+  if (command === "leave") {
+    leave(message)
   }
 }
