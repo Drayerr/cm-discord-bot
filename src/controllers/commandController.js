@@ -8,6 +8,7 @@ const chablau = require("../commands/chablau")
 const demonarch = require("../commands/demonarch")
 const drayerr = require("../commands/drayerr")
 const leave = require("../commands/leave")
+const random = require("../commands/random")
 
 const prefix = '$'
 
@@ -54,5 +55,8 @@ module.exports = function (message) {
   }
   if (command === "leave") {
     leave(message)
+  }
+  if (command === "random") {
+    random(message)
   }
 }
