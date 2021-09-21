@@ -1,9 +1,10 @@
 const ytdl = require("ytdl-core");
+const yts = require("yt-search")
 
 const prefix = '$'
 
 module.exports = function play(message) {
-	
+
 	const queue = new Map()
 
 	// Verify prefix, and if author is another bot
@@ -44,11 +45,23 @@ module.exports = function play(message) {
 		}
 
 		// Getting information of song from youtube link
-		const songInfo = await ytdl.getInfo(args[1]);
+		// const songInfo = await ytdl.getInfo(args[1]);
+		// const song = {
+		// 	title: songInfo.videoDetails.title,
+		// 	url: songInfo.videoDetails.video_url,
+		// };
+
+		args.shift()
+		args.push('oficial music audio')
+		const newArgs = [...args].join(', ')
+		
+		const searchSong = await yts(newArgs)
+		console.log('Args:', newArgs);
+		console.log('SearchSong', searchSong.all[0]);
 		const song = {
-			title: songInfo.videoDetails.title,
-			url: songInfo.videoDetails.video_url,
-		};
+			title: searchSong.all[0].title,
+			url: searchSong.all[0].url
+		}
 
 		if (!serverQueue) {
 			const queueContruct = {
