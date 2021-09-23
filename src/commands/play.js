@@ -44,24 +44,30 @@ module.exports = function play(message) {
 			);
 		}
 
-		// Getting information of song from youtube link
-		// const songInfo = await ytdl.getInfo(args[1]);
-		// const song = {
-		// 	title: songInfo.videoDetails.title,
-		// 	url: songInfo.videoDetails.video_url,
-		// };
+		const isValidURL = ytdl.validateURL(args[1])
+		let song = {}
 
-		args.shift()
-		args.push('oficial music audio')
-		const newArgs = [...args].join(', ')
-		
-		const searchSong = await yts(newArgs)
-		console.log('Args:', newArgs);
-		console.log('SearchSong', searchSong.all[0]);
-		const song = {
-			title: searchSong.all[0].title,
-			url: searchSong.all[0].url
+		if (isValidURL) {
+			// Getting information of song from youtube link
+			const songInfo = await ytdl.getInfo(args[1]);
+			song = {
+				title: songInfo.videoDetails.title,
+				url: songInfo.videoDetails.video_url,
+			}
+
+		} else {
+			args.shift()
+			args.push('oficial music audio')
+			const newArgs = [...args].join(', ')
+
+			const searchSong = await yts(newArgs)
+			song = {
+				title: searchSong.all[0].title,
+				url: searchSong.all[0].url
+			}
 		}
+	
+		console.log(song);
 
 		if (!serverQueue) {
 			const queueContruct = {
