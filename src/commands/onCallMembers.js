@@ -7,5 +7,5 @@ module.exports = function onCallMembers(message) {
 
   const st = [...usernames].join(',\n- ')
 
-  message.reply(`Otakus fedidos na call: \n- ${st}`)
+  message.reply(`Membros na call: \n- ${st}`)
 }

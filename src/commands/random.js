@@ -11,5 +11,5 @@ module.exports = function random(message) {
 
   const randomNumber = Math.floor(Math.random() * usernames.length)
 
-  return message.reply('Parabéns @' + usernames[randomNumber] + ', vc foi o noob selecionado.')
+  return message.reply('Parabéns @' + usernames[randomNumber] + ', vc foi o sorteado.')
 }

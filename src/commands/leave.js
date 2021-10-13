@@ -8,14 +8,14 @@ module.exports = function leave(message) {
     const voiceChannel = message.member.voice.channel
 
     if (!voiceChannel) {
-        return message.reply('Sair de onde meu Pajé? Tá loko?!')
+        return message.reply('Não estou em nenum canal de voz!')
     }
 
     const mappedUserList = voiceChannel.members.mapValues(member => member.user.id).values()
     const userList = Array.from(mappedUserList)
 
     if (!userList.some(userId => userId === botId)) {
-        return message.reply('Vc deve estar no mesmo canal de voz que eu.')
+        return message.reply('Vc deve estar no mesmo canal de voz que eu!')
     }
 
     voiceChannel.leave()
