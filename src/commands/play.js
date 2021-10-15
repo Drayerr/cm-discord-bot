@@ -69,7 +69,7 @@ module.exports = function play(message) {
 	
 		console.log(song);
 
-		if (serverQueue) {
+		if (!serverQueue) {
 			console.log("não tem server queue");
 			const queueContruct = {
 				textChannel: message.channel,
